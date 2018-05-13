@@ -5,3 +5,13 @@ Google Places API demo app
 
 ![Screenshot1](screenshots/screen_1.png) ![Screenshot2](screenshots/screen_2.png) ![Screenshot3](screenshots/screen_3.png)
 ![Screenshot4](screenshots/screen_4.png) ![Screenshot5](screenshots/screen_5.png) ![Screenshot6](screenshots/screen_6.png)
+
+In order to use the Google Places Api, you have to insert your own Api key (obtained from Google API Console) in the AndroidManifest.xml file as follows:
+``` 
+< application>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY" />
+... 
+< /aplication>
+```
