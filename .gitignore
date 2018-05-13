@@ -39,3 +39,6 @@ project.properties
 # Gradle-based build
 .gradle
 build/
+
+# Folder with the api key
+api_keys.xml
