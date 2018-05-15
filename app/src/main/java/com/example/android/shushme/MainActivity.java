@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         // Set up the recycler view
-        mRecyclerView = findViewById(R.id.places_list_recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.places_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         // COMPLETED (3) Modify the Adapter to take a PlaceBuffer in the constructor
         mAdapter = new PlaceListAdapter(this, null);
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements
                 null);
 
         if (data == null || data.getCount() == 0) return;
-        List<String> guids = new ArrayList<>();
+        List<String> guids = new ArrayList<String>();
         // Loop over the cursor rows and store each id in the list
         while (data.moveToNext()) {
             // Return the String with the column index of the PlaceId

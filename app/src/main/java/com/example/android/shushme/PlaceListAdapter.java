@@ -88,6 +88,7 @@ public void swapPlaces(PlaceBuffer newPlaces){
     @Override
     public int getItemCount() {
         // COMPLETED (5) Update getItemCount to return mPlaces's item count
+        if(mPlaces==null) return 0;
         return mPlaces.getCount();
     }
 
@@ -101,8 +102,8 @@ public void swapPlaces(PlaceBuffer newPlaces){
 
         public PlaceViewHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.name_text_view);
-            addressTextView = itemView.findViewById(R.id.address_text_view);
+            nameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
+            addressTextView = (TextView) itemView.findViewById(R.id.address_text_view);
         }
 
     }
