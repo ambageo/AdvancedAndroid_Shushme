@@ -39,3 +39,5 @@ project.properties
 # Gradle-based build
 .gradle
 build/
+
+api_values.xml
