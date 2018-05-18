@@ -39,11 +39,48 @@ public class Geofencing implements ResultCallback {
         mGeofenceList = new ArrayList<>();
     }
 
+    // COMPLETED (6) Inside Geofencing, implement a public method called registerAllGeofences that
+// registers the GeofencingRequest by calling LocationServices.GeofencingApi.addGeofences
+// using the helper functions getGeofencingRequest() and getGeofencePendingIntent()
+    public void registerAllGeoFences() {
+        // First, check that the API client is connected and that the Geofence list has Geofences
+        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected() ||
+                mGeofenceList == null || mGeofenceList.size() == 0) {
+            return;
+        }
+        try {
+            LocationServices.GeofencingApi.addGeofences(
+                    mGoogleApiClient,
+                    getGeofencingRequest(),
+                    getGeofencePendingIntent())
+                    .setResultCallback(this);
+        } catch (SecurityException e) {
+            // Catch exception generated if the app does not use ACCESS_FINE_LOCATION permission.
+            Log.e(TAG, e.getMessage());
+        }
+
+    }
+
+    // COMPLETED (7) Inside Geofencing, implement a public method called unRegisterAllGeofences that
+// unregisters all geofences by calling LocationServices.GeofencingApi.removeGeofences
+// using the helper function getGeofencePendingIntent()
+    public void unRegisterAllGeofences(){
+        if(mGoogleApiClient== null || !mGoogleApiClient.isConnected()){
+            return;
+        } try {
+            LocationServices.GeofencingApi.removeGeofences(mGoogleApiClient, getGeofencePendingIntent())
+                    .setResultCallback(this);
+        } catch (SecurityException e){
+            Log.e(TAG, e.getMessage());
+        }
+
+    }
+
     // COMPLETED (2) Inside Geofencing, implement a public method called updateGeofencesList that
 // given a PlaceBuffer will create a Geofence object for each Place using Geofence.Builder
 // and add that Geofence to mGeofenceList
     public void updateGeofencesList(PlaceBuffer places) {
-        mGeofenceList = null;
+        mGeofenceList = new ArrayList<>();
         if (places == null || places.getCount() == 0) return;
         for (Place place : places) {
             // Get the unique ID, latitude and longitude of the place
@@ -91,45 +128,10 @@ private GeofencingRequest getGeofencingRequest(){
         return mGeofencePendingIntent;
     }
 
-// COMPLETED (6) Inside Geofencing, implement a public method called registerAllGeofences that
-// registers the GeofencingRequest by calling LocationServices.GeofencingApi.addGeofences
-// using the helper functions getGeofencingRequest() and getGeofencePendingIntent()
-public void registerAllGeoFences() {
-    // First, check that the API client is connected and that the Geofence list has Geofences
-    if (mGoogleApiClient == null || !mGoogleApiClient.isConnected() ||
-            mGeofenceList == null || mGeofenceList.size() == 0) {
-        return;
-    }
-    try {
-        LocationServices.GeofencingApi.addGeofences(
-                mGoogleApiClient,
-                getGeofencingRequest(),
-                getGeofencePendingIntent())
-                .setResultCallback(this);
-    } catch (SecurityException e) {
-        // Catch exception generated if the app does not use ACCESS_FINE_LOCATION permission.
-        Log.e(TAG, e.getMessage());
-    }
-
-}
     @Override
     public void onResult(@NonNull Result result) {
         Log.e(TAG, String.format("Error adding/removing geofence : %s",
                 result.getStatus().toString()));
-    }
-// COMPLETED (7) Inside Geofencing, implement a public method called unRegisterAllGeofences that
-// unregisters all geofences by calling LocationServices.GeofencingApi.removeGeofences
-// using the helper function getGeofencePendingIntent()
-    public void unRegisterAllGeofences(){
-        if(mGoogleApiClient== null || !mGoogleApiClient.isConnected()){
-            return;
-        } try {
-            LocationServices.GeofencingApi.removeGeofences(mGoogleApiClient, getGeofencePendingIntent())
-                    .setResultCallback(this);
-        } catch (SecurityException e){
-            Log.e(TAG, e.getMessage());
-        }
-
     }
 
 }

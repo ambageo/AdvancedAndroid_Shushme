@@ -82,14 +82,14 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         // Set up the recycler view
-        mRecyclerView = (RecyclerView) findViewById(R.id.places_list_recycler_view);
+        mRecyclerView = findViewById(R.id.places_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PlaceListAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
 
         // COMPLETED (9) Create a boolean SharedPreference to store the state of the "Enable Geofences" switch
         // and initialize the switch based on the value of that SharedPreference
-        Switch onOffSwitch = (Switch) findViewById(R.id.enable_switch);
+        Switch onOffSwitch = findViewById(R.id.enable_switch);
         mIsEnabled = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.setting_enabled), false);
         onOffSwitch.setChecked(mIsEnabled);
         // COMPLETED (10) Handle the switch's change event and Register/Unregister geofences based on the value of isChecked
@@ -173,7 +173,10 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onResult(@NonNull PlaceBuffer places) {
                 mAdapter.swapPlaces(places);
-                // TODO (11) Call updateGeofenceList and registerAllGeofences if mIsEnabled is true
+                // COMPLETED (11) Call updateGeofenceList and registerAllGeofences if mIsEnabled is true
+                mGeofencing.updateGeofencesList(places);
+                if (mIsEnabled)
+                    mGeofencing.registerAllGeoFences();
             }
         });
     }
